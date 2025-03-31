@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { firestore } from "../config/firebase";
+import { useState, useEffect } from 'react';
+import { 
+  collection, 
+  addDoc, 
+  getDocs, 
+  doc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
+import { firestore } from '../config/firebase';
 
 export const useImageGallery = () => {
   const [images, setImages] = useState([]);
@@ -15,6 +15,10 @@ export const useImageGallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
+
+  // Konfigurasi Cloudinary - ganti dengan milik Anda
+  const CLOUD_NAME = 'damguvwwb'; 
+  const UPLOAD_PRESET = 'react_upload';
 
   const showAlert = (type, message) => {
     setAlert({ type, message });
@@ -24,15 +28,15 @@ export const useImageGallery = () => {
   const fetchImages = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(firestore, "images"));
-      const imageList = querySnapshot.docs.map((doc) => ({
+      const querySnapshot = await getDocs(collection(firestore, 'images'));
+      const imageList = querySnapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data(),
+        ...doc.data()
       }));
       setImages(imageList);
     } catch (error) {
       console.error("Error fetching images: ", error);
-      showAlert("error", "Failed to fetch images");
+      showAlert('error', 'Gagal memuat gambar');
     } finally {
       setLoading(false);
     }
@@ -44,22 +48,27 @@ export const useImageGallery = () => {
 
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "react_upload");
+    formData.append('file', file);
+    formData.append('upload_preset', UPLOAD_PRESET);
 
     try {
       const response = await fetch(
-        "https://api.cloudinary.com/v1_1/damguvwwb/image/upload",
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, 
         {
-          method: "POST",
-          body: formData,
+          method: 'POST',
+          body: formData
         }
       );
+      
+      if (!response.ok) {
+        throw new Error('Upload gagal');
+      }
+      
       const result = await response.json();
       return result.secure_url;
     } catch (error) {
       console.error("Cloudinary upload error: ", error);
-      showAlert("error", "Failed to upload image");
+      showAlert('error', 'Gagal mengunggah gambar');
       return null;
     }
   };
@@ -67,24 +76,25 @@ export const useImageGallery = () => {
   const handleCreate = async (imageData) => {
     setLoading(true);
     try {
-      const imageUrl = imageData.file
-        ? await uploadToCloudinary(imageData.file)
+      const imageUrl = imageData.file 
+        ? await uploadToCloudinary(imageData.file) 
         : null;
-
+      
       if (imageUrl) {
-        await addDoc(collection(firestore, "images"), {
+        await addDoc(collection(firestore, 'images'), {
           title: imageData.title,
           alt: imageData.alt,
           src: imageUrl,
+          createdAt: new Date().toISOString()
         });
 
-        fetchImages();
-        showAlert("success", "Image added successfully");
+        await fetchImages();
+        showAlert('success', 'Gambar berhasil ditambahkan');
         setDialogOpen(false);
       }
     } catch (error) {
       console.error("Error creating image: ", error);
-      showAlert("error", "Failed to add image");
+      showAlert('error', 'Gagal menambahkan gambar');
     } finally {
       setLoading(false);
     }
@@ -94,43 +104,42 @@ export const useImageGallery = () => {
     setLoading(true);
     try {
       let imageUrl = imageData.src;
-
+      
       if (imageData.file) {
         imageUrl = await uploadToCloudinary(imageData.file);
       }
 
-      const imageRef = doc(firestore, "images", imageData.id);
+      const imageRef = doc(firestore, 'images', imageData.id);
       await updateDoc(imageRef, {
         title: imageData.title,
         alt: imageData.alt,
         src: imageUrl,
+        updatedAt: new Date().toISOString()
       });
 
-      fetchImages();
-      showAlert("success", "Image updated successfully");
+      await fetchImages();
+      showAlert('success', 'Gambar berhasil diperbarui');
       setDialogOpen(false);
     } catch (error) {
       console.error("Error updating image: ", error);
-      showAlert("error", "Failed to update image");
+      showAlert('error', 'Gagal memperbarui gambar');
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (imageId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this image?"
-    );
+    const confirmDelete = window.confirm('Apakah Anda yakin ingin menghapus gambar ini?');
     if (!confirmDelete) return;
 
     setLoading(true);
     try {
-      await deleteDoc(doc(firestore, "images", imageId));
-      fetchImages();
-      showAlert("success", "Image deleted successfully");
+      await deleteDoc(doc(firestore, 'images', imageId));
+      await fetchImages();
+      showAlert('success', 'Gambar berhasil dihapus');
     } catch (error) {
       console.error("Error deleting image: ", error);
-      showAlert("error", "Failed to delete image");
+      showAlert('error', 'Gagal menghapus gambar');
     } finally {
       setLoading(false);
     }
@@ -157,6 +166,6 @@ export const useImageGallery = () => {
     handleDelete,
     handleOpenAddDialog,
     handleOpenEditDialog,
-    setDialogOpen,
+    setDialogOpen
   };
 };

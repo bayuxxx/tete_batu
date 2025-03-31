@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Gallery = () => {
-  // Sample data for the gallery with mixed orientations
   const photos = [
     {
       id: 1,
@@ -16,61 +15,89 @@ const Gallery = () => {
       alt: "Waterfall at Hideaway Tetebatu",
       type: "image",
     },
-    
+    {
+      id: 3,
+      src: "https://images.unsplash.com/photo-1470104240373-bc1812eddc9f",
+      alt: "Hideaway Tetebatu Landscape View",
+      type: "image",
+    },
+    {
+      id: 4,
+      src: "https://images.unsplash.com/photo-1470104240373-bc1812eddc9f",
+      alt: "Waterfall at Hideaway Tetebatu",
+      type: "image",
+    },
+    {
+      id: 5,
+      src: "https://images.unsplash.com/photo-1470104240373-bc1812eddc9f",
+      alt: "Waterfall at Hideaway Tetebatu",
+      type: "image",
+    },
   ];
 
   const videos = [
     {
       id: 1,
       thumbnail: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874",
+      src: 'https://www.youtube.com/embed/iQo-8wx0l0Y?si=B-6KM_VdnZZ06w-D',
       alt: "Welcome to Hideaway Tetebatu",
       type: "video",
     },
     {
       id: 2,
       thumbnail: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874",
+      src: 'https://www.youtube.com/embed/iQo-8wx0l0Y?si=B-6KM_VdnZZ06w-D',
       alt: "Exploring Tetebatu Village",
       type: "video",
     },
     {
       id: 3,
       thumbnail: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874",
+      src: 'https://www.youtube.com/embed/iQo-8wx0l0Y?si=B-6KM_VdnZZ06w-D',
+      alt: "Local Traditions",
+      type: "video",
+    },
+    {
+      id: 4,
+      thumbnail: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874",
+      src: 'https://www.youtube.com/embed/pqfZYvsTkkk?si=58y-4MbnkVMMgbCA',
+      alt: "Exploring Tetebatu Village",
+      type: "video",
+    },
+    {
+      id: 5,
+      thumbnail: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874",
+      src: 'https://www.youtube.com/embed/pqfZYvsTkkk?si=58y-4MbnkVMMgbCA',
       alt: "Local Traditions",
       type: "video",
     },
   ];
 
-  // State for active gallery tab
   const [activeTab, setActiveTab] = useState("photos");
   
-  // State for modal
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   
-  // Refs for animation
   const modalRef = useRef(null);
   
-  // Current gallery items based on active tab
   const currentGallery = activeTab === "photos" ? photos : videos;
   
-  // Handle media selection and set current index
   const openModal = (media) => {
     const index = currentGallery.findIndex(item => item.id === media.id);
     setSelectedMedia(media);
     setCurrentIndex(index >= 0 ? index : 0);
     setModalOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    document.body.style.overflow = 'hidden'; 
   };
 
-  // Function to close modal
   const closeModal = () => {
     if (modalRef.current) {
       modalRef.current.classList.add('animate-fadeOut');
       setTimeout(() => {
         setModalOpen(false);
         setSelectedMedia(null);
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
       }, 300);
     } else {
       setModalOpen(false);
@@ -79,7 +106,6 @@ const Gallery = () => {
     }
   };
   
-  // Navigation functions for modal
   const showPrevious = (e) => {
     e.stopPropagation();
     const newIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
@@ -94,7 +120,6 @@ const Gallery = () => {
     setSelectedMedia(currentGallery[newIndex]);
   };
   
-  // Keyboard navigation for modal
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!modalOpen) return;
@@ -152,7 +177,6 @@ const Gallery = () => {
             <div
               key={item.id}
               className={`group overflow-hidden rounded-xl shadow-md cursor-pointer transform transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${
-                // Varied sizes for better masonry effect
                 index % 5 === 0 ? "row-span-2 sm:col-span-2" : 
                 index % 7 === 0 ? "sm:row-span-2" : ""
               }`}
@@ -177,11 +201,16 @@ const Gallery = () => {
                 </div>
                 
                 {item.type === "video" && (
-                  <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <Play size={24} className="text-white" />
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                  <iframe
+                    className="w-full h-full"
+                    src={item.src}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
                 )}
               </div>
             </div>

@@ -3,7 +3,9 @@ import { useState } from "react";
 
 const AdminLayout = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentDateTime, setCurrentDateTime] = useState(new Date().toISOString().slice(0, 19).replace('T', ' '));
+  const [currentDateTime, setCurrentDateTime] = useState(
+    new Date().toISOString().slice(0, 19).replace("T", " ")
+  );
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -13,7 +15,9 @@ const AdminLayout = ({ children }) => {
   // Update time every second
   useState(() => {
     const timer = setInterval(() => {
-      setCurrentDateTime(new Date().toISOString().slice(0, 19).replace('T', ' '));
+      setCurrentDateTime(
+        new Date().toISOString().slice(0, 19).replace("T", " ")
+      );
     }, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -33,8 +37,6 @@ const AdminLayout = ({ children }) => {
             <h2 className="text-2xl font-bold text-green-600">Admin Panel</h2>
           </div>
 
-         
-          
           <nav className="flex-1 p-4 space-y-2">
             {menuItems.map((item) => (
               <Link
@@ -45,7 +47,7 @@ const AdminLayout = ({ children }) => {
                 <span className="ml-3">{item.text}</span>
               </Link>
             ))}
-            
+
             <button
               onClick={handleLogout}
               className="flex items-center w-full px-4 py-3 mt-4 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200"
@@ -75,7 +77,6 @@ const AdminLayout = ({ children }) => {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <nav className="p-4 border-t space-y-2 bg-white">
-            
             {menuItems.map((item) => (
               <Link
                 key={item.path}
@@ -86,7 +87,7 @@ const AdminLayout = ({ children }) => {
                 <span>{item.text}</span>
               </Link>
             ))}
-            
+
             <button
               onClick={handleLogout}
               className="flex items-center w-full px-4 py-3 mt-4 text-red-600 rounded-lg hover:bg-red-50 transition-colors duration-200"
@@ -109,7 +110,7 @@ const AdminLayout = ({ children }) => {
               </div>
             </div>
           </div>
-          
+
           {children}
         </div>
       </main>

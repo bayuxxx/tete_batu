@@ -7,20 +7,30 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Smooth scroll function
+  // Improved smooth scroll function
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
-    const element = document.querySelector(sectionId);
+    
+    // Remove the # if it exists in the sectionId
+    const targetId = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+    const element = document.querySelector(targetId);
+    
     if (element) {
-      const offsetTop = element.offsetTop;
+      // Get the navbar height dynamically to ensure accurate scrolling
+      const navbar = document.querySelector('nav');
+      const navbarHeight = navbar ? navbar.offsetHeight : 80;
+      
+      const offsetTop = element.getBoundingClientRect().top + window.pageYOffset;
+      
       window.scrollTo({
-        top: offsetTop - 80, // Adjust this value based on your navbar height
+        top: offsetTop - navbarHeight,
         behavior: 'smooth'
       });
-    }
-    // Close mobile menu if open
-    if (isMenuOpen) {
-      toggleMenu();
+      
+      // Close mobile menu if open
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
     }
   };
 
@@ -34,35 +44,35 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6">
             <a 
               href="#home" 
-              onClick={(e) => scrollToSection(e, '#home')}
+              onClick={(e) => scrollToSection(e, 'home')}
               className="hover:text-green-200 transition duration-300"
             >
               Home
             </a>
             <a 
               href="#about" 
-              onClick={(e) => scrollToSection(e, '#about')}
+              onClick={(e) => scrollToSection(e, 'about')}
               className="hover:text-green-200 transition duration-300"
             >
               About
             </a>
             <a 
               href="#gallery" 
-              onClick={(e) => scrollToSection(e, '#gallery')}
+              onClick={(e) => scrollToSection(e, 'gallery')}
               className="hover:text-green-200 transition duration-300"
             >
               Gallery
             </a>
             <a 
               href="#activities" 
-              onClick={(e) => scrollToSection(e, '#activities')}
+              onClick={(e) => scrollToSection(e, 'activities')}
               className="hover:text-green-200 transition duration-300"
             >
               Activities
             </a>
             <a 
               href="#contact" 
-              onClick={(e) => scrollToSection(e, '#contact')}
+              onClick={(e) => scrollToSection(e, 'contact')}
               className="hover:text-green-200 transition duration-300"
             >
               Contact
@@ -97,35 +107,35 @@ const Navbar = () => {
             <div className="flex flex-col space-y-3">
               <a 
                 href="#home" 
-                onClick={(e) => scrollToSection(e, '#home')}
+                onClick={(e) => scrollToSection(e, 'home')}
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 Home
               </a>
               <a 
                 href="#about" 
-                onClick={(e) => scrollToSection(e, '#about')}
+                onClick={(e) => scrollToSection(e, 'about')}
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 About
               </a>
               <a 
                 href="#gallery" 
-                onClick={(e) => scrollToSection(e, '#gallery')}
+                onClick={(e) => scrollToSection(e, 'gallery')}
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 Gallery
               </a>
               <a 
                 href="#activities" 
-                onClick={(e) => scrollToSection(e, '#activities')}
+                onClick={(e) => scrollToSection(e, 'activities')}
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 Activities
               </a>
               <a 
                 href="#contact" 
-                onClick={(e) => scrollToSection(e, '#contact')}
+                onClick={(e) => scrollToSection(e, 'contact')}
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 Contact

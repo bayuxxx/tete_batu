@@ -1,4 +1,7 @@
-import Navbar from '../components/navbar';
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
+import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Gallery from '../components/Gallery';
@@ -7,28 +10,48 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
 function Home() {
+  // Initialize AOS on component mount
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out',
+      once: false,
+      offset: 50,
+    });
+  }, []);
+
   return (
     <div className="text-gray-900">
-      {/* Navigation */}
+      {/* Navigation - No animation for navbar to keep it stable */}
       <Navbar />
 
       {/* Hero Section */}
-      <Hero />
+      <div data-aos="fade-up">
+        <Hero />
+      </div>
 
       {/* About Section */}
-      <About />
+      <div data-aos="fade-up" data-aos-delay="100">
+        <About />
+      </div>
 
       {/* Gallery Section */}
-      <Gallery />
+      <div data-aos="fade-up" data-aos-delay="200">
+        <Gallery />
+      </div>
 
       {/* Activities Section */}
-      <Activities />
+      <div data-aos="fade-up" data-aos-delay="100">
+        <Activities />
+      </div>
 
       {/* Contact Section */}
-      <Contact />
+      <div data-aos="fade-up" data-aos-delay="200">
+        <Contact />
+      </div>
 
       {/* Footer */}
-      <Footer />     
+      <Footer />
     </div>
   );
 }
