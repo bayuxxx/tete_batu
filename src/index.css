@@ -1,2 +1,13 @@
 @import "tailwindcss";
 
+/* Sembunyikan scrollbar tapi tetap bisa scroll */
+body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge lama */
+    overflow-y: scroll; /* Biar tetap bisa scroll tanpa scrollbar */
+  }
+  
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  

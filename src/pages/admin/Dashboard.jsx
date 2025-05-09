@@ -1,2 +1,4 @@
-const Dashboard = () => <h2>Admin Dashboard</h2>;
+import ActivityManager from "./service/ActivityService";
+
+const Dashboard = () => <ActivityManager/>;
 export default Dashboard;

@@ -7,16 +7,13 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Improved smooth scroll function
   const scrollToSection = (e, sectionId) => {
     e.preventDefault();
     
-    // Remove the # if it exists in the sectionId
     const targetId = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
     const element = document.querySelector(targetId);
     
     if (element) {
-      // Get the navbar height dynamically to ensure accurate scrolling
       const navbar = document.querySelector('nav');
       const navbarHeight = navbar ? navbar.offsetHeight : 80;
       
@@ -27,7 +24,6 @@ const Navbar = () => {
         behavior: 'smooth'
       });
       
-      // Close mobile menu if open
       if (isMenuOpen) {
         setIsMenuOpen(false);
       }

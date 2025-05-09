@@ -10,7 +10,7 @@ const Login = () => {
         e.preventDefault();
         if (username === "Wega Kun" && password === "Wega1234") {
             localStorage.setItem("isAuthenticated", "true");
-            navigate("/admin/dashboard");
+            navigate("/admin/activity");
         } else {
             alert("Username atau Password salah!");
         }

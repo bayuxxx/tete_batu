@@ -1,3 +1,2 @@
-import ImageManager from "./ImageManager";
-const Settings = () => <ImageManager/>;
+const Settings = () => <h1>Setting Page</h1>;
 export default Settings;

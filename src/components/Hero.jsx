@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,7 +34,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="hero-container">
+    <div id="home" className="hero-container">
       <div className="hero-section">
         <div className="hero-overlay">
           <div className="hero-content">

@@ -12,7 +12,6 @@ const AdminLayout = ({ children }) => {
     window.location.href = "/login";
   };
 
-  // Update time every second
   useState(() => {
     const timer = setInterval(() => {
       setCurrentDateTime(
@@ -23,8 +22,10 @@ const AdminLayout = ({ children }) => {
   }, []);
 
   const menuItems = [
-    { path: "/admin/dashboard", text: "Dashboard" },
-    { path: "/admin/users", text: "Users" },
+    { path: "/admin/activity", text: "Activity" },
+    { path: "/admin/images", text: "Images" },
+    { path: "/admin/videos", text: "Videos" },
+    { path: "/admin/messages", text: "Message" },
     { path: "/admin/settings", text: "Settings" },
   ];
 
@@ -34,7 +35,7 @@ const AdminLayout = ({ children }) => {
       <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:h-screen bg-white shadow-lg">
         <div className="flex-1 flex flex-col">
           <div className="p-4 border-b">
-            <h2 className="text-2xl font-bold text-green-600">Admin Panel</h2>
+            <h2 className="text-2xl font-bold text-green-600 text-center">Admin Panel</h2>
           </div>
 
           <nav className="flex-1 p-4 space-y-2">

@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/Login";
-import Dashboard from "./pages/admin/Dashboard";
-import Users from "./pages/admin/User";
 import Settings from "./pages/admin/Setting";
 import AdminLayout from "./pages/admin/AdminLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ActivityManager from "./pages/admin/ActivityManager";
+import ImageManager from "./pages/admin/ImgaeManager";
+import VideoManager from "./pages/admin/VideoManager";
+import MessageManager from "./pages/admin/MessgaeManager";
 import './App.css';
-// import GalleryCRUD from "./pages/admin/Gallery";
 
 function App() {
     return (
@@ -19,8 +20,10 @@ function App() {
 
                 {/* Protected Admin Routes */}
                 <Route path="/admin" element={<ProtectedRoute />}>
-                    <Route path="dashboard" element={<AdminLayout><Dashboard /></AdminLayout>} />
-                    <Route path="users" element={<AdminLayout><Users /></AdminLayout>} />
+                    <Route path="activity" element={<AdminLayout><ActivityManager /></AdminLayout>} />
+                    <Route path="images" element={<AdminLayout><ImageManager /></AdminLayout>} />
+                    <Route path="videos" element={<AdminLayout><VideoManager /></AdminLayout>} />
+                    <Route path="messages" element={<AdminLayout><MessageManager/></AdminLayout>} />
                     <Route path="settings" element={<AdminLayout><Settings/></AdminLayout>} />
                 </Route>
 
