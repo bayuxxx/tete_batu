@@ -37,7 +37,7 @@ const Navbar = () => {
           <div className="text-xl font-bold">Hideaway Tetebatu</div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex space-x-6 items-center">
             <a 
               href="#home" 
               onClick={(e) => scrollToSection(e, 'home')}
@@ -72,6 +72,12 @@ const Navbar = () => {
               className="hover:text-green-200 transition duration-300"
             >
               Contact
+            </a>
+            <a 
+              href="/login"
+              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition duration-300"
+            >
+              Admin
             </a>
           </div>
           
@@ -135,6 +141,12 @@ const Navbar = () => {
                 className="hover:text-green-200 transition duration-300 py-2"
               >
                 Contact
+              </a>
+              <a 
+                href="/login"
+                className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition duration-300 inline-block w-full text-center"
+              >
+                Admin
               </a>
             </div>
           </div>
